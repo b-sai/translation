@@ -1,6 +1,6 @@
 import streamlit as st
 from gensim.models import Word2Vec, KeyedVectors
-import keras
+from tensorflow import keras
 st.title('English - French Translation Tool')
 if 'count' not in st.session_state:
     st.session_state['count'] = ""
