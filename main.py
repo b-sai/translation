@@ -69,10 +69,14 @@ st.text_input('Enter English Word', on_change=get_translation,
 st.button('Get Translation', on_click=get_translation)
 
 st.write("Top 10 French Translations:")
-s = ''
-for pred in st.session_state.count:
-    s += "- " + pred + "\n"
-st.markdown(s)
+print(type(st.session_state.count), st.session_state.count)
+if type(st.session_state.count) is tuple:
+    s = ''
+    for pred in st.session_state.count:
+        s += "- " + pred + "\n"
+    st.markdown(s)
+else:
+    st.write(st.session_state.inps + " not in vocabulary")
 
 st.write("""
          The translation model is a replication of the paper [Exploiting Similarities among Languages for Machine Translation](https://arxiv.org/pdf/1309.4168.pdf). 
