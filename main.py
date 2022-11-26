@@ -47,10 +47,9 @@ y_mod = get_ymod()
 
 def get_translation():
     input_word = st.session_state['inps']
-    print(input_word)
+    input_word = input_word.lower()
     try:
         input_vec = x_mod[input_word].reshape(1, -1)
-        print(input_vec)
     except KeyError:
         st.session_state.count = st.session_state['inps'] + \
             " not in model vocabulary"
