@@ -33,7 +33,7 @@ def get_model():
     return model
 
 
-def get_nn_preds(model, mod_res):
+def get_nn_preds(y_mod, mod_res):
     predictions = y_mod.most_similar(mod_res, topn=10)
     assert len(predictions) == 10
     preds, dist = zip(*predictions)
@@ -55,7 +55,7 @@ def get_translation():
             " not in model vocabulary"
         return
     out_vec = model.predict(input_vec)
-    preds = get_nn_preds(model, out_vec)
+    preds = get_nn_preds(y_mod, out_vec)
     # print(out_vec)
     st.session_state.count = preds
 
@@ -65,7 +65,17 @@ def demo(inp):
 
 
 st.text_input('Enter English Word', on_change=get_translation,
-              key='inps', value="hello")
+              key='inps', value="dog")
 st.button('Get Translation', on_click=get_translation)
 
-st.write("French Predictions:", st.session_state.count)
+st.write("Top 10 French Translations:")
+s = ''
+for pred in st.session_state.count:
+    s += "- " + pred + "\n"
+st.markdown(s)
+
+st.write("""
+         The translation model is a replication of the paper [Exploiting Similarities among Languages for Machine Translation](https://arxiv.org/pdf/1309.4168.pdf). 
+         To generate the translations, I use word embeddings from 
+         [fasttext by Meta AI Research](https://fasttext.cc/docs/en/crawl-vectors.html) and find a linear mapping between English and French word embeddings using keras.
+         """)
