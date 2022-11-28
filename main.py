@@ -4,6 +4,7 @@ import streamlit as st
 from gensim.models import Word2Vec, KeyedVectors
 from tensorflow import keras
 
+st.set_page_config(page_title="English to French Translator")
 st.markdown('# English to French Translation Tool')
 st.markdown('<p style="color:grey; font-size: 18px;">By Sai Shreyas Bhavanasi</p>',
             unsafe_allow_html=True)
