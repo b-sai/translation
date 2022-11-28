@@ -72,6 +72,7 @@ def get_translation():
 
     input_word = st.session_state['inps']
     input_word = input_word.lower()
+    input_word = input_word.strip()
     try:
         input_vec = x_mod[input_word].reshape(1, -1)
     except KeyError:
