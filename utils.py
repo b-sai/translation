@@ -1,7 +1,7 @@
 import numpy as np
 import math
 from copy import deepcopy
-import torch
+# import torch
 
 
 def get_score(a, b, freq_table, substition=False):
@@ -49,7 +49,8 @@ def get_enhanced_preds(y_mod, pred_vec: np.array, src_word: str,  ins_table, del
         score = enhanced_levenshtein(
             src_word, word, ins_table, del_table, sub_table)
         avg_scores.append((1-cos_dist)+(score/40))
-    avg_idxs = torch.topk(torch.tensor(avg_scores), 10,
-                          sorted=True, largest=False)[1]
+    # avg_idxs = torch.topk(torch.tensor(avg_scores), 10,
+    #                       sorted=True, largest=False)[1]
+    avg_idxs = np.sort(np.argpartition(avg_scores, 10)[:10])
     avg_preds = [words[i] for i in avg_idxs]
     return avg_preds

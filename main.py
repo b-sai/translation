@@ -2,8 +2,7 @@ from utils import *
 import pickle
 import streamlit as st
 from gensim.models import Word2Vec, KeyedVectors
-from tensorflow import keras
-
+from keras.models import load_model
 st.set_page_config(page_title="English to French Translator")
 st.markdown('# English to French Translation Tool')
 st.markdown('<p style="color:grey; font-size: 18px;">By Sai Shreyas Bhavanasi</p>',
@@ -17,32 +16,30 @@ if 'clicks' not in st.session_state:
     st.session_state['clicks'] = 0
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def get_xmod():
     x_mod = KeyedVectors.load_word2vec_format(
         'eng_20k.vecs', binary=False)
-    print()
+
     return x_mod
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def get_ymod():
     y_mod = KeyedVectors.load_word2vec_format(
         'fr_20k.vecs', binary=False)
-    print('here')
 
     return y_mod
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def get_model():
-    model = keras.models.load_model("en-fr.keras")
-    print()
+    model = load_model("en-fr.keras")
 
     return model
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def get_tables():
     with open('tables.pkl', 'rb') as f:
         tables = pickle.load(f)
