@@ -1,8 +1,10 @@
+import os
 from utils import *
 import pickle
 import streamlit as st
 from gensim.models import Word2Vec, KeyedVectors
-from keras.models import load_model
+import keras
+
 st.set_page_config(page_title="English to French Translator")
 st.markdown('# English to French Translation Tool')
 st.markdown('<p style="color:grey; font-size: 18px;">By Sai Shreyas Bhavanasi</p>',
@@ -34,7 +36,11 @@ def get_ymod():
 
 @st.cache_resource
 def get_model():
-    model = load_model("en-fr.keras")
+
+    base_path = os.path.dirname(__file__)
+    model_path = os.path.join(base_path, "en-fr.keras")
+    model = keras.models.load_model(model_path)
+    # model = keras.models.load_model("en-fr.keras")
 
     return model
 
